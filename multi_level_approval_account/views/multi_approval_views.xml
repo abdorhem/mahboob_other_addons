@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="multi_approval_view_form_inherit_account" model="ir.ui.view">
+        <field name="name">multi_approval_view_form_inherit_account</field>
+        <field name="model">multi.approval</field>
+        <field name="inherit_id" ref="multi_level_approval.multi_approval_view_form" />
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//field[@name='type_id']" position="before">
+                <field name="department_id" />
+            </xpath>
+
+            <xpath expr="//field[@name='type_id']" position="attributes">
+				<attribute name="domain">[('department_id.id','=',department_id)]</attribute>
+			</xpath>
+
+
+            <xpath expr="//field[@name='contact_id']" position="replace"/>
+
+            <xpath expr="//group[2]" position="before">
+                <group>
+                    <div class="o_row">
+                        <label for="contact_id"/>
+                        <field name="contact_id"
+                               attrs="{'invisible': [('contact_opt', 'in', ['None', False])], 'required': [('contact_opt', '=', 'Required')], 'readonly': [('state', '!=', 'Draft')]}"/>
+                        <button name="view_partner_ledger" type="object"
+                            string="PARTNER LEDGER"
+                            icon="fa-book"
+                            groups="account.group_account_user"
+                            attrs="{'invisible': [('contact_id', '=', False)]}"
+                            class="oe_link" />
+                    </div>
+                </group>
+            </xpath>
+
+            <xpath expr="//page[@name='approver']" position="after">
+                <field name="account_payment_ids" invisible="1"/>
+                <field name="account_move_ids" invisible="1"/>
+                <field name="purchase_order_ids" invisible="1"/>
+                <field name="hr_expense_ids" invisible="1"/>
+                <page name="payments" string="Payments" attrs="{'invisible': [('account_payment_ids', '=', [])]}">
+                    <field name="account_payment_ids" readonly="1"/>
+                </page>
+                <page name="entries" string="Journal Entries" attrs="{'invisible': [('account_move_ids', '=', [])]}">
+                    <field name="account_move_ids" readonly="1"/>
+                </page>
+                <page name="purchase_orders" string="Purchases" attrs="{'invisible': [('purchase_order_ids', '=', [])]}">
+                    <field name="purchase_order_ids" readonly="1"/>
+                </page>
+                <page name="hr_expenses" string="Expenses" attrs="{'invisible': [('hr_expense_ids', '=', [])]}">
+                    <field name="hr_expense_ids" readonly="1"/>
+                </page>
+            </xpath>
+            <xpath expr="//button[@name='action_approve']" position="after">
+                <field name="create_record_after_approval" invisible="1"/>
+                <field name="record_to_create" invisible="1"/>
+                <field name="last_approve_user_id" invisible="1"/>
+                <field name="show_for_current_user" invisible="1"/>
+                <button name="create_record" type="object"
+                        string="Create Payment"
+                        groups="account.group_account_invoice"
+                        attrs="{'invisible': ['|', '|', '|', ('create_record_after_approval', '=', False), ('record_to_create', '!=', 'account.payment'), ('state', '!=', 'Approved'), ('show_for_current_user', '=', False)]}"
+                        class="oe_highlight" />
+                <button name="create_record" type="object"
+                        string="Create Expense"
+                        groups="hr_expense.group_hr_expense_user"
+                        attrs="{'invisible': ['|', '|', '|', ('create_record_after_approval', '=', False), ('record_to_create', '!=', 'hr.expense'), ('state', '!=', 'Approved'), ('show_for_current_user', '=', False)]}"
+                        class="oe_highlight" />
+                <button name="create_record" type="object"
+                        string="Create Purchase Order"
+                        groups="purchase.group_purchase_user"
+                        attrs="{'invisible': ['|', '|', '|', ('create_record_after_approval', '=', False), ('record_to_create', '!=', 'purchase.order'), ('state', '!=', 'Approved'), ('show_for_current_user', '=', False)]}"
+                        class="oe_highlight" />
+                <button name="create_record" type="object"
+                        string="Create Journal Entry"
+                        groups="account.group_account_manager"
+                        attrs="{'invisible': ['|', '|', '|', ('create_record_after_approval', '=', False), ('record_to_create', '!=', 'account.move'), ('state', '!=', 'Approved'), ('show_for_current_user', '=', False)]}"
+                        class="oe_highlight" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
