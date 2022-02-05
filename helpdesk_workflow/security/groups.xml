@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+	
+	
+	<record id="markerting_manager_help" model="res.groups">
+		<field name="name">Marketing Manager Helpdesk</field>
+		
+	</record>
+
+	</data>
+</odoo>

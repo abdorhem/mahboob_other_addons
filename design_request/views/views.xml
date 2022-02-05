@@ -1,0 +1,207 @@
+<odoo>
+  <data>
+
+    <record id="design_request_view_form" model="ir.ui.view">
+      <field name="name">design_request.design_request</field>
+      <field name="model">design_request.design_request</field>
+      <field name="arch" type="xml">
+        <form string="">
+           <header>
+                    <button name="approve" type="object"
+                            string="Approve" states="draft"
+                            class="oe_highlight" />
+                    <button name="ceo" type="object"
+                            string="Marketing Approve" states="ceo"
+                            class="oe_highlight"  groups="design_request.markerting_manager"/>
+                    <button name="approve1" type="object"
+                            string="Approve" states="approve1"
+                            class="oe_highlight" />
+                    <button name="approve2" type="object"
+                            string="Approve" states="approve2"
+                            class="oe_highlight" />
+                    <button name="approve3" type="object"
+                            string="Approve" states="approve3"
+                            class="oe_highlight" />
+                            
+                    <button name="phase1" type="object"
+                            string="Design 1" states="phase1"
+                            class="oe_highlight"  groups="design_request.designer_group"/>
+      
+                    <button name="phase2" type="object"
+                            string="Design 2" states="phase2"
+                            class="oe_highlight"   groups="design_request.designer_group"/>
+      
+                    <button name="phase3" type="object"
+                            string="Design 3" states="phase3"
+                            class="oe_highlight"   groups="design_request.designer_group"/>
+
+               
+                    <button name="back" type="object"
+                            string="Back to Designer" states="approve1,approve2"
+                            class="oe_highlight" />
+                 
+                  
+                    <button name="cancel" type="object"
+                            string="Cancel"  states=""/>
+                    <field name="state" widget="statusbar"  statusbar_visible="draft,phase1,phase2,phase3,cancel,done"/>/>
+                </header>
+          <sheet>
+            <group>
+              <group>
+                <field name="name" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                <field name="image" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                <field name="requester" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+              </group>
+              <group>
+                <field name="date" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                <field name="designer_id" attrs="{'readonly': [('state', '!=', 'ceo')]}" />
+                <field name="department" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+              </group>
+            </group>
+         
+            <notebook>
+              <page name="phase1" string="Phase 1"  >
+                <group>
+                <field name="image1" attrs="{'readonly': [('state', '!=', 'phase1')]}" />
+                <field name="txt1" attrs="{'readonly': [('state', '!=', 'phase1')]}" />
+                <field name="comment1" attrs="{'readonly': [('state', '!=', 'approve1')],'required': [('state', '=', 'approve1')]}" />
+              </group>
+
+              </page>
+              <page name="phase2" string="Phase 2"  >
+                <group>
+                <field name="image2" attrs="{'readonly': [('state', '!=', 'phase2')]}" />
+                <field name="txt2" attrs="{'readonly': [('state', '!=', 'phase2')]}" />
+                <field name="comment2" attrs="{'readonly': [('state', '!=', 'approve2')],'required': [('state', '=', 'approve2')]}" />
+              </group>
+              </page>
+              
+              <page name="phase3" string="Phase 3"  >
+                <group>
+                <field name="image3" attrs="{'readonly': [('state', '!=', 'phase3')]}" />
+                <field name="txt3" attrs="{'readonly': [('state', '!=', 'phase3')]}" />
+                <field name="comment3" attrs="{'readonly': [('state', '!=', 'approve3')],'required': [('state', '=', 'approve3')]}" />
+              </group>
+              </page>
+            </notebook>
+         
+         
+         
+          </sheet>
+          <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+            </div>
+        </form>
+      </field>
+    </record>
+
+
+    <record id="design_request_view_tree" model="ir.ui.view">
+      <field name="name">design.request.tree</field>
+      <field name="model">design_request.design_request</field>
+      <field name="arch" type="xml">
+        <tree string="">
+            
+            <field name="name"/>
+            <field name="date"/>
+          
+        </tree>
+      </field>
+    </record>
+
+    <record id="design_request_action" model="ir.actions.act_window">
+      <field name="name">Offer Request</field>
+      <field name="res_model">design_request.design_request</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+      id="design_request_request_menu"
+      name="Design Request"
+      action="design_request_action"
+      parent="website_axis_helpdesk.menu_helpdesk_root"
+      sequence="15"/>
+
+   
+   
+    <!-- ############################################################# -->
+
+
+    <record id="offer_request_view_form" model="ir.ui.view">
+      <field name="name">offer.request.view.form</field>
+      <field name="model">offer.request</field>
+      <field name="arch" type="xml">
+        <form string="">
+           <header>
+                    <button name="approve" type="object"
+                            string="Approve" states="draft"
+                            class="oe_highlight" />
+                            
+                    <button name="op_approve" type="object"
+                            string="Operation Approve" states="approve"
+                            class="oe_highlight"  groups="design_request.operation_manager"/>
+
+                    <button name="account_approve" type="object"
+                            string="Accounting Approve" states="op_approve"
+                            class="oe_highlight"  groups="design_request.accounting_manager"/>
+                 
+                    <button name="ceo" type="object"
+                            string="CEO Approval" states="account_approve"
+                            class="oe_highlight"  groups="design_request.ceo_manager"/>
+                 
+                  
+                    <button name="cancel" type="object"
+                            string="Cancel" />
+                    <field name="state" widget="statusbar" />
+                </header>
+          <sheet>
+            <group>
+              <group>
+                <field name="name" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                <field name="date_from" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                <field name="image" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+              </group>
+              <group>
+                <field name="date" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                <field name="date_to" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+              </group>
+            </group>
+            <field name="description" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record id="offer_request_view_tree" model="ir.ui.view">
+      <field name="name">offer.request.view.tree</field>
+      <field name="model">offer.request</field>
+      <field name="arch" type="xml">
+        <tree string="">
+            
+            <field name="name"/>
+            <field name="date"/>
+          
+        </tree>
+      </field>
+    </record>
+
+    <record id="offer_request_action" model="ir.actions.act_window">
+      <field name="name">Offer Request</field>
+      <field name="res_model">offer.request</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+      id="offer_request_menu"
+      name="Offer Request"
+      action="offer_request_action"
+      parent="website_axis_helpdesk.menu_helpdesk_root"
+      sequence="10"/>
+
+
+
+
+  </data>
+</odoo>

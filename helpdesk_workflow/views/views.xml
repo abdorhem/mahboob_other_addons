@@ -1,0 +1,71 @@
+<odoo>
+  <data>
+
+
+    <!-- ############################################################# -->
+
+
+
+<record id="helpdesk_ticket_cron" model="ir.cron">
+  <field name="name">Overdue Date Ticket</field>
+  <field name="model_id" ref="model_helpdesk_ticket"/>
+  <field name="interval_number">1</field>
+  <field name="interval_type">minutes</field>
+  <field name="numbercall">-1</field>
+  <!-- <field name="state">code</field> -->
+  <field name="code">model.to_overdue()</field>
+</record>
+
+
+<record id="helpdesk_ticket_view_form_inherit" model="ir.ui.view">
+  <field name="name">helpdesk.ticket.view.form.inherit</field>
+  <field name="model">helpdesk.ticket</field>
+  <field name="inherit_id" ref="website_axis_helpdesk.helpdesk_ticket_view_form"/>
+  <field name="arch" type="xml">
+    <xpath expr="//header" position="inside">
+      <button string="Send Email" name="action_send" type="object" class="oe_highlight"  groups="helpdesk_workflow.markerting_manager_help"/>
+    </xpath>
+    
+
+  
+  </field>
+</record>
+
+
+<record id="helpdesk_stage_view_form_inherit" model="ir.ui.view">
+  <field name="name">helpdesk.stage.view.form.inherit</field>
+  <field name="model">helpdesk.stage</field>
+  <field name="inherit_id" ref="website_axis_helpdesk.helpdesk_stage_view_form"/>
+  <field name="arch" type="xml">
+
+   <xpath expr="//field[@name='is_close']" position="after">
+        <field name="is_overdue"/>
+        <field name="days" attrs="{'readonly': [('is_overdue', '=',False )]}" />
+      </xpath>
+   
+ 
+  </field>
+</record>
+ 
+ <record id="overdue_ticket_request_email_template" model="mail.template">
+        <field name="name">Ticket: Overdue</field>
+        <field name="model_id" ref="website_axis_helpdesk.model_helpdesk_ticket"/>
+        <field name="subject">${object.display_name}</field>
+        <field name="email_to">${(object.user_id.email_formatted or user.email_formatted) | safe}</field>
+        <!-- <field name="email_from">${(object.partner_email if not object.sudo().partner_id.email or object.sudo().partner_id.email != object.partner_email else '') | safe}</field> -->
+        <!-- <field name="partner_to">${object.partner_id.id if object.sudo().partner_id.email and object.sudo().partner_id.email == object.partner_email else ''}</field> -->
+        <field name="body_html" type="xml">
+<div>
+    Dear ${object.sudo().partner_id.name or 'Madam/Sir'},<br /><br />
+    This automatic message informs you that your ticket (reference ${object.id}).
+    is overdue.
+    <br /><br />
+ 
+</div>
+        </field>
+        <field name="lang">${object.partner_id.lang or object.user_id.lang or user.lang}</field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+
+  </data>
+</odoo>
