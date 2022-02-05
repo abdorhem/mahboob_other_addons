@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+    <t t-name="ScrapReports.buttons">
+        <t t-foreach="buttons" t-as="button">
+            <button type="button" class="btn btn-primary btn-sm" t-att-action="button.action"><t t-esc="button.name"/></button>
+        </t>
+    </t>
+
+    <t t-name="ScrapReports.searchOptions">
+        <div class="o_scrap_filters">
+            <div class="o_dropdown dropdown">
+                <button id="clear_filter_scrap_report">Clear</button>
+                <a type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                    <span class="fa fa-calendar"/>
+                    Period: <t t-if="filters.date and filters.date.filter"><t t-if="filters.date.filter == 'today'">Today</t><t t-if="filters.date.filter == 'month'">This Month</t><t t-if="filters.date.filter == 'week'">This Week</t><t t-if="filters.date.filter == 'custom'">Custom</t></t>
+                </a>
+                <div class="dropdown-menu o_filters_menu" role="menu">
+                    <a role="menuitem" data-filter="today" class="dropdown-item js_stock_report_date_filter">Today</a>
+                    <a role="menuitem" data-filter="month" class="dropdown-item js_stock_report_date_filter">This Month</a>
+                    <a role="menuitem" data-filter="week" class="dropdown-item js_stock_report_date_filter">This Week</a>
+                    <div role="separator" class="dropdown-divider"/>
+                    <a role="menuitem" class="dropdown-item js_foldable_trigger o_closed_menu" data-filter='custom_filter_date'>Custom</a>
+                    <div class="o_foldable_menu o_closed_menu o_open_menu o_stock_report_search" data-filter='custom_filter_date'>
+                        <label class="custom-date" for="date_from">Start Date:</label>
+                        <div class="form-group custom-date">
+                            <div class='o_datepicker js_stock_reports_datetimepicker' t-att-data-default-value="filters.date and filters.date.date_from">
+                                <input type='text' class="o_datepicker_input" name="date_from" />
+                                <span class="o_datepicker_button"/>
+                            </div>
+                        </div>
+                        <label class="custom-date" for="date_to">To Date:</label>
+                        <div class="form-group custom-date">
+                            <div class='o_datepicker js_stock_reports_datetimepicker' t-att-data-default-value="filters.date and filters.date.date_to">
+                                <input type='text' class="o_datepicker_input" name="date_to" />
+                                <span class="o_datepicker_button"/>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary js_stock_report_date_filter" data-filter="custom">Apply</button>
+                    </div>
+                </div>
+            </div>
+            <div class="o_dropdown dropdown">
+                <a type="button" class="btn btn-link dropdown-toggle stock_products_filter" data-toggle="dropdown">
+                    <span class="fa fa-cubes"/> Products
+                </a>
+                <ul class="dropdown-menu o_filters_menu" role="menu">
+                    <li class="o_stock_report_search js_stock_products_m2m"/>
+                </ul>
+            </div>
+            <div class="o_dropdown dropdown">
+                <a type="button" class="btn btn-link dropdown-toggle stock_categories_filter" data-toggle="dropdown">
+                    <span class="fa fa-th-list"/> Categories
+                </a>
+                <ul class="dropdown-menu o_filters_menu" role="menu">
+                    <li class="o_stock_report_search js_stock_categories_m2m"/>
+                </ul>
+            </div>
+            <div class="o_dropdown dropdown">
+                <a type="button" class="btn btn-link dropdown-toggle stock_outlets_filter" data-toggle="dropdown">
+                    <span class="fa fa-th-list"/> Outlets
+                </a>
+                <ul class="dropdown-menu o_filters_menu" role="menu">
+                    <li class="o_stock_report_search js_stock_outlets_m2m"/>
+                </ul>
+            </div>
+            <div class="o_dropdown dropdown">
+                <a type="button" class="btn btn-link dropdown-toggle stock_branch_filter" data-toggle="dropdown">
+                    <span class="fa fa-th-list"/> Branch
+                </a>
+                <ul class="dropdown-menu o_filters_menu" role="menu">
+                    <li class="o_stock_report_search js_stock_branch_m2m"/>
+                </ul>
+            </div>
+            <div class="o_dropdown dropdown">
+                <a type="button" class="btn btn-link dropdown-toggle stock_region_filter" data-toggle="dropdown">
+                    <span class="fa fa-th-list"/> Region
+                </a>
+                <ul class="dropdown-menu o_filters_menu" role="menu">
+                    <li class="o_stock_report_search js_stock_region_m2m"/>
+                </ul>
+            </div>
+
+            <div t-if="!_.isEmpty(options['multi_company'])" class="btn-group o_dropdown">
+                <a type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                    <span class="fa fa-filter"/>
+                    Company:
+                    <t t-set="selected_company" t-value="_.findWhere(options['multi_company'], {'id': filters['company_id']})"/>
+                    <t t-if="!selected_company">
+                        <t t-set="selected_company" t-value="_.findWhere(options['multi_company'], {'selected': true})"/>
+                    </t>
+                    <t t-if="!_.isEmpty(selected_company)">
+                        <t t-esc="selected_company['name']"/>
+                    </t>
+                </a>
+                <div class="dropdown-menu o_filters_menu" role="menu">
+                    <t t-foreach="options['multi_company']" t-as="c">
+                        <a role="menuitem" class="dropdown-item js_switch_choice_filter" t-att-title="c['name']" data-filter="multi_company" data-field="company_id" t-att-data-id="c['id']"><t t-esc="c['name']"/></a>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>
