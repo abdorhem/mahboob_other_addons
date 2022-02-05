@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="material_request_form_view" model="ir.ui.view">
+            <field name="name">material.request.form.view</field>
+            <field name="model">material.request</field>
+            <field name="arch" type="xml">
+                <form>
+                   <header>
+                        <button name="action_confirm" type="object" string="Confirm" class="btn-primary" attrs="{'invisible': [('state', 'in', ['confirm','approve','reject','received'])]}"/>
+                        <button name="action_approve" type="object" string="Approve"  class="btn-primary" attrs="{'invisible': [('state', 'in', ['draft','approve','reject','received'])]}"/>
+                        <button name="action_reject" type="object" string="Rejected" class="btn-primary" attrs="{'invisible': [('state', 'in', ['draft','approve','reject','received'])]}"/>
+                        <button name="action_reset_draft" type="object" string="Reset to draft" class="btn-primary" attrs="{'invisible': [('state', 'in', ['approve', 'confirm','draft','received'])]}"/>
+                        <button name="action_cancel" type="object" string="Cancel" class="btn-primary" attrs="{'invisible': [('state', 'in', ['approve', 'confirm','draft','reject'])]}" invisible="1"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                    </header>
+                    <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" icon="fa-truck"
+                                name="show_picking"  groups="base.group_user"
+                        attrs="{'invisible': [('state', 'not in', ['received'])]}">
+                            <field name="transfer_count" widget="statinfo" string="Internal Transfers"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" icon="fa-book"
+                                name="action_show_po" string="Purchase Order"/>
+                        <button class="oe_stat_button" type="object" icon="fa-book"
+                                name="action_show_mo" string="Manufacturing Order"/>
+                    </div>
+                    <div class="oe_title">
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/><br/>
+                            </h1>
+                        </div>
+                    </div>
+                        <group>
+                            <group>
+                                <field name="user_id" attrs="{'readonly': [('state', 'in', ('confirm','approve','received','reject'))]}"/>
+                                <field name="source_outlet_id" required="1" attrs="{'readonly': [('state', 'in', ('confirm','approve','received','reject'))]}"/>
+                                <field name="branch_outlet_id" required="1" attrs="{'readonly': [('state', 'in', ('confirm','approve','received','reject'))]}"/>
+                                <field name="company_branch_id"/>
+                            </group>
+                            <group>
+                                <field name="request_date" attrs="{'readonly': [('state', 'in', ('confirm','approve','received','reject'))]}"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="request_action" required="1" attrs="{'readonly': [('state', 'in', ('confirm','approve','received','reject'))]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Material Lines">
+                                <field name="request_line_ids" attrs="{'readonly': [('state', 'in', ('confirm','approve','received','reject'))]}">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="uom_id"/>
+                                        <field name="description" invisible="1"/>
+                                        <field name="remark"/>
+                                        <field name="onhand_qty"/>
+                                        <field name="qty"/>
+                                        <field name="src_onhand_qty"/>
+                                        <field name="accepted_qty" groups="material_request.group_approve_manager" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                    </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <record id="material_request_tree_view" model="ir.ui.view">
+            <field name="name">material.request.view.tree</field>
+            <field name="model">material.request</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="source_outlet_id"/>
+                    <field name="branch_outlet_id"/>
+                    <field name="request_date"/>
+                    <field name="request_action"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="material_request_search_view" model="ir.ui.view">
+            <field name="name">material.request.search</field>
+            <field name="model">material.request</field>
+            <field name="arch" type="xml">
+                <search string="Material Request Search">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="request_date"/>
+                    <field name="source_outlet_id"/>
+                    <field name="branch_outlet_id"/>
+                    <field name="state"/>
+                    <group expand="0" string="Group By">
+                        <filter string="User" name="user_id" context="{'group_by':'user_id'}"/>
+                        <filter string="Reqisition Date" name="request_date" context="{'group_by':'request_date'}"/>
+                        <filter string="Source Location" name="source_outlet_id" context="{'group_by':'source_outlet_id'}"/>
+                        <filter string="Destination Location" name="branch_outlet_id" context="{'group_by':'branch_outlet_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_material_request">
+            <field name="name">Material Request</field>
+            <field name="res_model">material.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    
+        <menuitem id="menu_action_material_request" name="Material Request" parent="stock.menu_stock_warehouse_mgmt" action="action_material_request"/>
+        
+    </data>
+</odoo>

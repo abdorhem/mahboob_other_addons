@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_approve_manager" model="res.groups">
+            <field name="name">Material Approve Mangaer</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="group_dwf_material_req_cancel" model="res.groups">
+            <field name="name">Material Request Cancel</field>
+            <field name="category_id" ref="dwf.module_category_dwf_management"/>
+        </record>
+
+        <!-- Added Rule for Filter Material Request as per Company Selected-->
+        <record id="multi_company_material_request_rule" model="ir.rule">
+            <field name="name">Multi-Company Material Request Rule</field>
+            <field name="model_id"
+                   ref="material_request.model_material_request"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),
+                ('company_id', '=', user.company_id.id)]
+            </field>
+        </record>
+        <record id="group_stock_scrap_company_branch_rules" model="ir.rule">
+            <field name="name">Group Stock Scrap Company Branch</field>
+            <field name="model_id" ref="model_group_stock_scrap"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|','|',('company_branch_id','=',False),
+                ('company_branch_id', '=', user.company_branch_id.id),('company_branch_id', 'in',user.company_branch_id.branch_ids.ids)]
+            </field>
+<!--            <field name="domain_force">['|','&amp;','|',('branch_outlet_id','=',False),('branch_outlet_id.id','in', user.op_outlet_ids.ids),('company_branch_id', '=', user.company_branch_id.id),('company_branch_id', 'in',user.company_branch_id.branch_ids.ids)]</field>-->
+        </record>
+    </data>
+</odoo>
