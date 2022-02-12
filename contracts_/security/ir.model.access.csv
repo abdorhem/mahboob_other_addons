@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_contract_license,contract.license,model_contract_license,base.group_user,1,1,1,1
+access_contract_license_line,contract.license.line,model_contract_license_line,base.group_user,1,1,1,1
+access_contract_contract,new.contract.contract,model_contract_contract,base.group_user,1,1,1,1
+access_company_reg,company.reg,model_company_reg,base.group_user,1,1,1,1
+access_car_car,car.car,model_car_car,base.group_user,1,1,1,1
+access_oil_line,oil.line,model_oil_line,base.group_user,1,1,1,1
+access_car_penalty,car.penalty,model_car_penalty,base.group_user,1,1,1,1
+access_buildings_buildings,buildings.buildings,model_buildings_buildings,base.group_user,1,1,1,1
+access_car_fule,car.fule,model_car_fule,base.group_user,1,1,1,1
+access_med.certificate,med.certificate,model_med_certificate,base.group_user,1,1,1,1

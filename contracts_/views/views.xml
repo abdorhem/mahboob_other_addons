@@ -1,0 +1,426 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record id="contract_liecnse_name_view_form" model="ir.ui.view">
+      <field name="name">contract.license.view.form</field>
+      <field name="model">contract.license</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+            <group>
+                <field name="name"/>
+                <field name="date"/>        
+                <field name="end_date"/>
+            </group>
+            <group>
+                <field name="number"/>
+                <field name="renew_date"/>
+                <field name="image"/>  
+            </group>
+            </group>
+            <notebook>
+              <page name="Penalties" string="Penalties">
+                <field name="penalty_ids">
+                  <tree  editable='bottom'>
+                      <field name="name"/>
+                      <field name="amount"/>
+                      <field name="image"/>
+                  </tree>
+                  </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="contract_license_view_tree" model="ir.ui.view">
+      <field name="name">contract.license.view.tree</field>
+      <field name="model">contract.license</field>
+      <field name="arch" type="xml">
+        <tree string="">
+          <field name="name"/>
+          <field name="number"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="contract_license_action_window">
+      <field name="name">License</field>
+      <field name="res_model">contract.license</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+ 
+       <menuitem id="contracts_.contract_menu_root" name="Adminsrtation"
+        sequence="30"/>
+
+
+
+    <!-- actions -->
+    <menuitem name="License" id="license_menu" parent="contracts_.contract_menu_root"
+              action="contract_license_action_window" sequence="59"/>
+
+  
+  
+  
+  
+    <!-- #############################  Contract   ####################################### -->
+    <record id="contracts_contract_view_form" model="ir.ui.view">
+      <field name="name">contract.contractview.form</field>
+      <field name="model">contract.contract</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+
+          <div class="oe_title">
+                            <h1 class="d-flex">
+                                <field name="name" placeholder=" Name" required="True"/>
+                            </h1>
+                        </div>
+            <group>
+
+            <group>
+                <field name="owner"/>
+                <field name="image"/>  
+                <field name="water"/>
+                <field name="elec"/>  
+            </group>
+            <group>
+                <field name="date"/>        
+                <field name="renew"/>   
+                <field name="pay_w"/>
+                <field name="pay_e"/>  
+            </group>
+            </group>
+         
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="contract_contract_view_tree" model="ir.ui.view">
+      <field name="name">contract.contract.view.tree</field>
+      <field name="model">contract.contract</field>
+      <field name="arch" type="xml">
+        <tree string="">
+          <field name="name"/>
+          <field name="owner"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="contract_contract_action_window">
+      <field name="name">Contract</field>
+      <field name="res_model">contract.contract</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- actions -->
+    <menuitem name="Contracts" id="contract_menu" parent="contracts_.contract_menu_root"
+              action="contract_contract_action_window"/>
+
+  
+  
+  
+    <!-- #############################  company.reg   ####################################### -->
+    <record id="company_reg_contract_view_form" model="ir.ui.view">
+      <field name="name">company.reg.view.form</field>
+      <field name="model">company.reg</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+
+            <group>
+                <field name="name"/>
+                <field name="location"/>
+                <field name="start_date"/>        
+                <field name="image"/>        
+            </group>
+            <group>
+                <field name="number"/>
+                <field name="id_id"/>  
+                <field name="end_date"/>     
+                <field name="renew"/>     
+            </group>
+            </group>
+         
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="company_reg_view_tree" model="ir.ui.view">
+      <field name="name">company.reg.view.tree</field>
+      <field name="model">company.reg</field>
+      <field name="arch" type="xml">
+        <tree string="">
+          <field name="name"/>
+          <field name="number"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="company_reg_action_window">
+      <field name="name">CR</field>
+      <field name="res_model">company.reg</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- actions -->
+    <menuitem name="CRs" id="cr_menu" parent="contracts_.contract_menu_root"
+              action="company_reg_action_window"/>
+
+  
+
+
+
+    <!-- #############################  CAR    ####################################### -->
+    <record id="liecnse_name_view_form" model="ir.ui.view">
+      <field name="name">car.car.view.form</field>
+      <field name="model">car.car</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+            <group>
+                <field name="model"/>
+                <field name="number"/>        
+                <field name="city"/>  
+            </group>
+            <group>
+                <field name="type"/>
+                <field name="driver_id"/>
+                <field name="condition"/>
+            </group>
+            <group>
+                <field name="date_id"/>
+                <field name="fhs"/>  
+                <field name="drivr_con"/>  
+                <field name="city"/>  
+            </group>
+            <group>
+                <field name="date_id_end"/>
+                <field name="end_fhs"/>  
+                <field name="end_driver_con"/>  
+                <field name="image"/>  
+           
+            </group>
+            </group>
+            <notebook>
+              <page name="Penalties" string="Penalties">
+                <field name="penalty">
+                  <tree  editable='bottom'>
+                      <field name="name"/>
+                      <field name="amount"/>
+                      <field name="type"/>
+                      <field name="date"/>
+                      <field name="image"/>
+                  </tree>
+                  </field>
+              </page>
+
+
+              <page name="oil change" string="Oil Change">
+                <field name="oil_change">
+                  <tree  editable='bottom'>
+                      <field name="oil_change"/>
+                      <field name="odo_befor"/>
+                      <field name="odo_after"/>
+                  </tree>
+                  </field>
+              </page>
+
+              <page name="Devices" string="Devices">
+                    <group>
+                      <field name="sim"/>
+                      <field name="sensors"/>
+                      <field name="gps"/>
+                    </group>
+              </page>
+              <page name="fule" string="Fule">
+                  <field name="fule">
+                    <tree  editable='bottom'>
+                        <field name="date"/>
+                        <field name="liter"/>
+                        <field name="type"/>
+                        <field name="amount"/>
+                    </tree>
+                  </field>
+              </page>
+              <page name="Note" string="Note">
+                    <group>
+                      <field name="note"/>
+                    </group>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="car_car_view_tree" model="ir.ui.view">
+      <field name="name">car.car.view.tree</field>
+      <field name="model">car.car</field>
+      <field name="arch" type="xml">
+        <tree string="">
+          <field name="type"/>
+          <field name="number"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="car_car_action_window">
+      <field name="name">Car</field>
+      <field name="res_model">car.car</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <!-- actions -->
+    <menuitem name="Cars" id="car_menu" parent="contracts_.contract_menu_root"
+              action="car_car_action_window" sequence="7"/>
+
+
+
+  
+    <!-- #############################  Building   ####################################### -->
+    <record id="contract_contract_view_form" model="ir.ui.view">
+      <field name="name">cbuildings.buildings_ctview.form</field>
+      <field name="model">buildings.buildings</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+
+            <group>
+                <field name="name"/>
+                <field name="location"/>
+            </group>
+            <group>
+                <field name="number"/>  
+                <field name="amount"/>     
+            </group>
+            <group>
+                <field name="city"/>
+                <field name="date_start"/>
+
+            </group>
+            <group>
+   
+                <field name="type"/>  
+                <field name="date_to"/>  
+                <field name="image"/>   
+            </group>
+            </group>
+         
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="buildings_buildings_view_tree" model="ir.ui.view">
+      <field name="name">cbuildings.buildings.view.tree</field>
+      <field name="model">buildings.buildings</field>
+      <field name="arch" type="xml">
+        <tree string="">
+          <field name="name"/>
+          <field name="location"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="buildings_buildings_action_window">
+      <field name="name">Building</field>
+      <field name="res_model">buildings.buildings</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- actions -->
+    <menuitem name="Buildings" id="buildings_menu" parent="contracts_.contract_menu_root"
+              action="buildings_buildings_action_window"/>
+
+  
+  
+  
+    <!-- #############################  med.certificate   ####################################### -->
+    <record id="med_certificate_view_form" model="ir.ui.view">
+      <field name="name">med.certificate.view.form</field>
+      <field name="model">med.certificate</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+
+            <group>
+                <field name="name_id"/>
+                <field name="outlet_id"/>
+                <field name="image"/>
+            </group>
+            <group>
+                <field name="idn"/>  
+                <field name="date"/>     
+                <field name="type"/>
+            </group>
+         
+            </group>
+         
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="med_certificate_view_tree" model="ir.ui.view">
+      <field name="name">med.certificate.view.tree</field>
+      <field name="model">med.certificate</field>
+      <field name="arch" type="xml">
+        <tree string="">
+          <field name="name_id"/>
+          <field name="outlet_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="med_certificate_action_window">
+      <field name="name">Certificate</field>
+      <field name="res_model">med.certificate</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- actions -->
+    <menuitem name="Certificate" id="med_menu" parent="contracts_.contract_menu_root"
+              action="med_certificate_action_window"/>
+
+  
+  
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </data>
+</odoo>

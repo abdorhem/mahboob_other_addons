@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="emails_dates" model="ir.cron">
+            <field name="name">Send reminders for contracts date</field>
+            <field name="model_id" ref="contracts_.model_buildings_buildings"/>
+            <field name="state">code</field>
+            <field name="code">model._crone()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>
