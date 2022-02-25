@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="hr_payroll_overtime_view" model="ir.ui.view">
+        <field name="name">hr.payroll.overtime.form</field>
+        <field name="model">hr.payroll.overtime</field>
+        <field name="arch" type="xml">
+            <form string="Payroll Overtime">
+                <group colspan="4" col="2">
+                    <field name="overtime_hours"/>
+                </group>
+                <footer>
+                    <button name="add_hours" string="ADD" type="object" class="oe_highlight"/>
+                    or
+                    <button  class="oe_link" string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_payroll_overtime_action" model="ir.actions.act_window">
+        <field name="name">Payslip Report</field>
+        <field name="res_model">hr.payroll.overtime</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_hr_payslip"/>
+        <field name="binding_view_types">form</field>
+    </record>
+
+</odoo>

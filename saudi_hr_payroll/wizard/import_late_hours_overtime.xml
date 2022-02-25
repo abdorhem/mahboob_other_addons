@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="import_late_hours_overtime_view" model="ir.ui.view">
+        <field name="name">wizard for import xls file for late hours/overtime</field>
+        <field name="model">import.latehour.overtime</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <group>
+                    <field name="excel_file"  filename="excel_filename"  />
+                </group>
+                <footer>
+                    <button name="import_xls" string="Import" type="object"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="import_late_hour_wizard" model="ir.actions.act_window">
+        <field name="name">Import Late Hour/Overtime</field>
+        <field name="res_model">import.latehour.overtime</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem action="import_late_hour_wizard" id="late_hour_wizard_import" parent="hr_work_entry_contract.menu_hr_payroll_configuration" sequence="31" name="Import Late Hour/Overtime"/>
+
+    <record id="success_import_wizard_hr" model="ir.ui.view">
+        <field name="name">success.import.wizard.hr</field>
+        <field name="model">generate.latehour</field>
+        <field name="arch" type="xml">
+            <form string="Success">
+                <span>  records are imported successfully.</span>
+                <footer>
+                    <button string="OK" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="employee_late_history_form_view" model="ir.ui.view">
+        <field name="name">employee.late.history.form.view</field>
+        <field name="model">employee.late.history</field>
+        <field name="arch" type="xml">
+            <form string="Employee late History">
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="badge_id"/>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                        <field name="late_hour"/>
+                        <field name="overtime_hour"/>
+                    </group>
+              </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="employee_branch_late_tree_view" model="ir.ui.view">
+        <field name="name">employee.late.history.tree.view</field>
+        <field name="model">employee.late.history</field>
+        <field name="arch" type="xml">
+            <tree string="Employee Late History">
+                <field name="employee_id"/>
+                <field name="badge_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="late_hour"/>
+                <field name="overtime_hour"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_employee_late_history" model="ir.actions.act_window">
+        <field name="name">Employee Late History</field>
+        <field name="res_model">employee.late.history</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="emp_late_history_employee_extd_form" model="ir.ui.view">
+        <field name="name">emp.late.history.extd_form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="object" icon="fa-book" name="show_emp_late_history"  groups="base.group_user" string="Late History"/>
+            </div>
+        </field>
+    </record>
+
+    <menuitem id="menu_config_late_ovetime_menu" parent="hr.menu_human_resources_configuration" name="Late/Overtime" action="action_employee_late_history" sequence="77" groups="hr.group_hr_manager"/>
+
+</odoo>
