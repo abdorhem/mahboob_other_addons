@@ -337,6 +337,32 @@ class MaterialRequest(models.Model):
                 move_lines.append((0,0, pick_vals))
         return move_lines
 
+    @api.model
+    def cron_delay_deduction(self):
+        stock_pickings = self.env['stock.picking'].search([('src_pick_id', '!=', False),
+                                                           ('request_id', '!=', False),
+                                                           ('has_been_deducted', '=', False),
+                                                           ('state', '=', 'assigned')])
+        for stock_picking in stock_pickings:
+            diff = fields.Datetime.now() - stock_picking.scheduled_date
+            diff_in_hours = diff.total_seconds() / 3600
+            if diff_in_hours > 24 and stock_picking.dest_outlet_id.warehouse_manager_id:
+                other_payslip_obj = self.env['other.hr.payslip']
+                # create other allowance
+                payslip_data = {
+                    'employee_id': stock_picking.dest_outlet_id.warehouse_manager_id.id,
+                    'description': _("Unconfirmed Material Request Transfer Deduction."),
+                    'calc_type': 'days',
+                    'amount': 0,
+                    'percentage': 0,
+                    'no_of_days': 1,
+                    'no_of_hours': 0,
+                    'state': 'draft',
+                    'operation_type': 'deduction',
+                }
+                other_payslip_obj.create(payslip_data)
+                stock_picking.write({"has_been_deducted": True})
+
     def action_show_po(self):
         for rec in self:
             purchase_action = self.env.ref('purchase.purchase_rfq')

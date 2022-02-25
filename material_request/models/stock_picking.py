@@ -37,7 +37,8 @@ class StockPicking(models.Model):
         string='Is Transit to Destination',
         compute='_compute_is_transit_to_dest'
     )
-
+    has_been_deducted = fields.Boolean(default=True)
+    
     @api.depends('request_id', 'location_id', 'location_dest_id')
     def _compute_is_transit_to_dest(self):
         for picking in self:
@@ -234,6 +235,7 @@ class StockPicking(models.Model):
                     'picking_type_id': self.env['stock.picking.type'].search([('code', '=', 'internal'),
                                                                               ('warehouse_id', '=',
                                                                                pick.request_id.branch_outlet_id.warehouse_id.id)]).id,
+                    'has_been_deducted': False,
                     'branch_outlet_id': pick.request_id.branch_outlet_id.id,
                     'company_branch_id': pick.request_id.company_branch_id.id,
                     'request_id': pick.request_id.id,

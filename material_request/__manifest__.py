@@ -16,17 +16,19 @@
     'category': 'Warehouse',
     'depends': [
         'stock', 'internal_transfer_allow_user',
-        'hr', 'dwf',
+        'hr', 'dwf', 'saudi_hr_payroll',
         'purchase', 'odoo_multi_branch', 'report_extended',
         'move_source_tracebility', 'stock_force_availability_app'
     ],
     'data': [
         'security/ir.model.access.csv',
         'security/security_view.xml',
+        'data/material_request_cron.xml',
         'data/material_request_sequence.xml',
         'views/material_request_view.xml',
         'views/stock_picking_views.xml',
         'views/stock_scrap_views.xml',
+        'views/res_branch_outlet_views.xml',
         'views/group_scrap_orders.xml',
         'wizard/create_mo.xml',
         'report/material_request_report.xml',
