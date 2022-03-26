@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_card_report,access.product.card.report.report.manager,model_product_card_report,base.group_user,1,1,1,1
+access_stock_history_pos_secu,access_stock_pos_history,model_stock_history_pos,base.group_user,1,1,1,1
+access_product_card_tree_report,access_product_card_tree_repotr,model_report_product_card_tree,base.group_user,1,1,1,1
+
+
