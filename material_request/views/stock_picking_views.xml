@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Added Source outlet and Destination outlet in Transfers-->
+        <record id="view_picking_form_inherit_mr" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit.mr</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock_force_availability_app.force_avail_button_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_button_box']" position="inside">
+                    <button class="oe_stat_button" type="object" icon="fa-book" name="create_po" string="Create PO"
+                            attrs="{'invisible': [('state', 'in', ['done','assigned'])]}"/>
+                </xpath>
+                <xpath expr="//form/sheet/group" position="replace">
+                    <group>
+                        <group>
+                            <div class="o_td_label">
+                                <label for="partner_id" string="Delivery Address" style="font-weight:bold;"
+                                       attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                                <label for="partner_id" string="Receive From" style="font-weight:bold;"
+                                       attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}"/>
+                                <label for="partner_id" string="Contact" style="font-weight:bold;"
+                                       attrs="{'invisible': [('picking_type_code', 'in', ['incoming', 'outgoing'])]}"/>
+                            </div>
+                            <field name="partner_id" nolabel="1"/>
+                            <field name="source_outlet_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="dest_outlet_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="src_pick_id" invisible="1"/>
+                            <field name="picking_type_id" />
+                            <field name="location_id" options="{'no_create': True}" groups="stock.group_stock_multi_locations" attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}"/>
+                            <field name="location_dest_id" options="{'no_create': True}" groups="stock.group_stock_multi_locations" attrs="{'invisible': [('picking_type_code', '=', 'outgoing')]}"/>
+                            <field name="backorder_id" attrs="{'invisible': [('backorder_id','=',False)]}"/>
+                        </group>
+                        <group>
+                            <label for="scheduled_date"/>
+                            <div class="o_row">
+                                <field name="scheduled_date" attrs="{'required': [('id', '!=', False)]}"
+                                    decoration-warning="state not in ('done', 'cancel') and scheduled_date &lt; now"
+                                    decoration-danger="state not in ('done', 'cancel') and scheduled_date &lt; current_date"
+                                    decoration-bf="state not in ('done', 'cancel') and (scheduled_date &lt; current_date or scheduled_date &lt; now)"/>
+                                <field name="json_popover" widget="stock_rescheduling_popover" attrs="{'invisible': [('json_popover', '=', False)]}"/>
+                            </div>
+                            <field name="pos_order_id" invisible="0"/>
+                            <field name="date_deadline" 
+                                attrs="{'invisible': ['|', ('state', 'in', ('done', 'cancel')), ('date_deadline', '=', False)]}"
+                                decoration-danger="date_deadline and date_deadline &lt; current_date"
+                                decoration-bf="date_deadline and date_deadline &lt; current_date"/>
+                            <field name="date_done" string="Effective Date" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                            <field name="origin" placeholder="e.g. PO0032"/>
+                            <field name="owner_id" groups="stock.group_tracking_owner"
+                                   attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="request_id"/>
+                    <field name="is_transit_to_dest" invisible="0"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_assign']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|',('show_check_availability', '=', False),
+                        ('state','=','assigned'), ('is_transit_to_dest', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
