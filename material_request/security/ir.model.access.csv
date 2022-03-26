@@ -1,6 +1,0 @@
-id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-access_material_request,access_material_request,model_material_request,,1,1,1,1
-access_material_request_line,access_material_request_line,model_material_request_line,,1,1,1,1
-access_group_stock_scrap,access_group_stock_scrap,model_group_stock_scrap,,1,1,1,1
-access_stock_scrap_type,access_stock_scrap_type,model_stock_scrap_type,,1,1,1,1
-access_create_mo_wiz,access_create_mo_wiz,model_create_mo_wiz,base.group_user,1,1,1,1
