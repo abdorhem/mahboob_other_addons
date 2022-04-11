@@ -15,7 +15,7 @@
     'version': '0.1',
     'license': 'AGPL-3',
     'images': ['static/description/main_screenshot.png'],
-    'depends': ['base', 'account', 'point_of_sale',],
+    'depends': ['base', 'account', 'point_of_sale', 'odoo_multi_branch'],
     'data': [
         'views/pos_config.xml',
     ],
